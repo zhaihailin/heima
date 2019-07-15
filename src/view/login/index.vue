@@ -23,7 +23,30 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    const checkMobile = (rule, value, callback) => {
+      if (/^1[3-9]\d{9}$/.test(value)) {
+        callback()
+      } else {
+        callback(new Error("手机格式不正确"))
+      }
+    };
+    return {
+      loginForm: { mobile: "", code: "" },
+      rules: {
+        mobile: [
+          { required: true, message: "请输入手机号", trigger: "blur" },
+          { validator: checkMobile, trigger: 'blur' }
+        ],
+        code: [
+          { required: true, message: "请输入验证码", trigger: "blur" },
+          { len: 6, message: '请输入6位数字', trigger: 'blur' }
+          ]
+      }
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
